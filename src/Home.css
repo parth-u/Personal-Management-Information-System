@@ -1,159 +1,171 @@
-.tophome{
-    display: flex;
-    align-items: center;
-    background-image: url("https://i.ibb.co/DRTvLmS/vecteezy-abstract-white-and-grey-geometric-background-texture-6044536.jpg");
-    backdrop-filter: 10px;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+.tophome {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(to right, #ffffff, #5e5e5e);
+  backdrop-filter: 10px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.tophome > h3 {
+  color: rgb(0, 0, 0);
+  padding-left: 40px;
+  font-family: Trebuchet MS, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+}
+.tophome > h3:hover {
+  cursor: pointer;
+}
+.topsign {
+  padding-left: 55%;
+}
+.topavatar {
+  top: 9px;
+  scale: 1.4;
+}
+.topavatar:hover {
+  cursor: pointer;
+}
+.topbutton {
+  border-radius: 30px !important;
+  background-color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255) !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  text-decoration: none;
 
-
-}
-.tophome > h3{
-    color: rgb(0, 0, 0);
-    padding-left: 40px;
-    font-family:Trebuchet MS, sans-serif;
-    font-size: 20px;
-    font-weight: 600;
-}
-.tophome > h3:hover{
-    cursor: pointer;
-}
-.topsign{
-    padding-left: 55%;
-}
-.topavatar{
-    top: 9px;
-    scale: 1.4;
-}
-.topavatar:hover{
-    cursor:pointer;
-}
-.topbutton{
-   border-radius: 30px !important;
-   background-color:rgb(0, 0, 0);
-   color: rgb(255, 255, 255) !important;
-   font-weight: 600 !important;
-   text-transform: none !important;
-   text-decoration: none;
-   
-    border: none;
-    font-size: 14px !important;
-    font-family: inherit;
-    color: #fff;
-    width: 10em;
-    height: 4em;
-   font-weight: 700 !important;
-    text-align: center;
-    scale: 0.9;
-    background-size: 300%;
-    border-radius: 30px;
-    
-   
+  border: none;
+  font-size: 14px !important;
+  font-family: inherit;
+  color: #fff;
+  width: 10em;
+  height: 4em;
+  font-weight: 700 !important;
+  text-align: center;
+  scale: 0.9;
+  background-size: 300%;
+  border-radius: 30px;
 }
 .topbutton:hover {
-    cursor: pointer;
-    transform: scale(1.1);
-    transition: ease-in-out 500ms;
+  cursor: pointer;
+  transform: scale(1.1);
+  transition: ease-in-out 500ms;
 }
 /* Add this to your existing CSS file */
 .avatar-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-  }
-  
-  .avatar-modal {
-    width: 400px;
-    height: 500px;
-    background: white;
-    border-radius: 5px;
-    text-align: center;
-    position: relative;
-   
-  }
-  
-  .modal-avatar {
-    width: 60px !important;
-    height: 60px !important;
-    border: 2px solid white;
-    border-radius: 50%;
-    margin: 20px auto;
-    cursor: pointer;
-  }
-  
-  .modal-close {
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-  }
-  .user{
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    
-  }
-  .userrow{
-    display: flex;
-    gap: 40px;
-    margin-left: 50px;
-    padding-top: 20px;
-    padding-bottom: 15px;
-    align-items: center;
-  }
-  .usertitle{
-    font-size: 20px;
-  }
-  .userhead{
-    font-size: 25px;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
 
-  .i1{
-    margin-left: 15px;
-  }
-  .i2{
-    margin-left: 20px;
-  }
-.i3{
-    margin-left: 10px;
+.avatar-modal {
+  width: 400px;
+  height: 530px;
+  background: white;
+  border-radius: 5px;
+  text-align: center;
+  position: relative;
 }
-.i4{
-    margin-left: 28px;
+
+.modal-avatar {
+  width: 60px !important;
+  height: 60px !important;
+  border: 2px solid white;
+  border-radius: 50%;
+  margin: 20px auto;
+  cursor: pointer;
 }
-.i5{
-    margin-left: -5px;
+
+.modal-close {
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
-.div1{
+.user {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+.userrow {
+  display: flex;
+  gap: 40px;
+  margin-left: 50px;
+  padding-top: 20px;
+  padding-bottom: 15px;
+  align-items: center;
+}
+.usertitle {
+  font-size: 20px;
+}
+.userhead {
+  font-size: 25px;
+}
+
+.i1 {
+  margin-left: 15px;
+}
+.i2 {
+  margin-left: 20px;
+}
+.i3 {
+  margin-left: 10px;
+}
+.i4 {
+  margin-left: 28px;
+}
+.i5 {
+  margin-left: -5px;
+}
+.div1 {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-image: url("https://i.ibb.co/kgfHyhB/vecteezy-abstract-white-background-with-halftone-texture-6469271.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 91vh;
 }
-.div2{
-  margin-top: 30px;
+.div2 {
+  margin-top: 50px;
+  position: relative;
 }
-.div3{
+.div2 svg {
+  position: absolute;
+  left: 390px; 
+  top: 50%;
+  transform: translateY(-50%);
+  transition: color 0.3s;
+}
+.div2 svg:hover {
+  cursor: pointer;
+  color: #004ea1;
+}
+.div3 {
   display: flex;
   flex-direction: row;
   height: 450px;
   min-width: fit-content;
-  margin-top: 20px;
+  margin-top: 40px;
   border-radius: 20px;
   border: 3px solid black;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 }
-.div4{
+.div4 {
   display: flex;
   flex-direction: column;
   height: 400px;
@@ -163,7 +175,7 @@
   border: 3px solid black;
   align-items: center;
 }
-.div5{
+.div5 {
   display: flex;
   flex-direction: column;
   text-align: left;
@@ -171,49 +183,65 @@
   margin-top: 10px;
   margin-right: 10px;
 }
-.input-group {
-  display: flex;
-  align-items: center;
-}
 
-.input1 {
-  min-height: 50px;
-  max-width: 350px;
-  padding: 0 1rem;
-  color: #0a0a0a;
-  font-size: 15px;
-  border: 1px solid #5e4dcd;
-  border-radius: 6px 0 0 6px;
-  background-color: transparent;
-}
-
-.button--submit {
-  min-height: 50px;
-  padding: .5em 1em;
-  border: none;
-  border-radius: 0 6px 6px 0;
-  background-color: #5e4dcd;
-  color: #fff;
-  font-size: 15px;
-  cursor: pointer;
-  transition: background-color .3s ease-in-out;
-}
-
-.button--submit:hover {
-  background-color: #5e5dcd;
-}
-
-.input1:focus, .input1:focus-visible {
-  border-color: #3898EC;
-  outline: none;
-}
-.prof1{
+.prof1 {
   height: 200px !important;
   width: 200px !important;
   margin-top: 50px !important;
 }
-.addh3{
+.addh3 {
   max-width: 300px;
   word-wrap: break-word;
+}
 
+.input11 {
+  border: none;
+  outline: none;
+  border-radius: 15px;
+  padding: 1em;
+  background-color: #ccc;
+  box-shadow: inset 2px 5px 10px rgba(0,0,0,0.3);
+  transition: 300ms ease-in-out;
+  width: 400px;
+}
+
+.input11:focus {
+  background-color: white;
+  transform: scale(1.05);
+  box-shadow: 13px 13px 50px #969696,
+             -13px -13px 50px #ffffff;
+}
+.unf{
+  color: red;
+  font-weight: 800;
+  font-size: xx-large;
+  margin-top: 200px;
+}
+.ep{
+  margin: 0;
+  margin-top: -20px;
+  cursor: pointer;
+}
+
+/* Add this to your existing CSS or create a new CSS file */
+.topavatar-container {
+  position: relative;
+  display: inline-block;
+}
+
+.topavatar-container:hover::after {
+  content: "Add Profile";
+  position: absolute;
+  top: 100%; /* Adjust the distance from the element */
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px;
+  background-color: #333;
+  color: #fff;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 1;
+}
+.filechoose{
+  margin-left: 120px;
 }

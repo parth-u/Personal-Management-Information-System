@@ -38,7 +38,7 @@ const Login = () => {
                     placeholder="Password"
                     required=""
                   />
-                  <button onClick={() => navigate("/home")}> Log in</button>
+                  <button onClick={() => navigate("/")}> Log in</button>
                 </form>
               </div>
 
