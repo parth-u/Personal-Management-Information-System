@@ -82,6 +82,7 @@
   border-radius: 50%;
   margin: 20px auto;
   cursor: pointer;
+  border: 1px solid black;
 }
 
 .modal-close {
@@ -157,23 +158,33 @@
 }
 .div3 {
   display: flex;
-  flex-direction: row;
-  height: 450px;
+  flex-direction: column;
+  height: 490px;
   min-width: fit-content;
   margin-top: 40px;
   border-radius: 20px;
   border: 3px solid black;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  align-items: center;
 }
 .div4 {
   display: flex;
   flex-direction: column;
   height: 400px;
   width: 350px;
-  margin: 25px;
+ margin-bottom: 10px;
+  margin-top: 25px;
+  margin-left: 25px;
+  margin-right: 25px;
   border-radius: 20px;
   border: 3px solid black;
   align-items: center;
+}
+.profedit{
+  width: 100px !important;
+}
+.div6{
+  display: flex;
 }
 .div5 {
   display: flex;
@@ -188,6 +199,7 @@
   height: 200px !important;
   width: 200px !important;
   margin-top: 50px !important;
+  border: 1px solid black;
 }
 .addh3 {
   max-width: 300px;

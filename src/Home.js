@@ -6,7 +6,7 @@ import logo1 from "./components/pimslogo.png";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Profiledisplay from "./components/Profiledisplay";
+// import Profiledisplay from "./components/Profiledisplay";
 import SearchIcon from "@mui/icons-material/Search";
 import { db, storage } from "./components/Firebase";
 import {
@@ -22,17 +22,105 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 
-function AvatarModal({ isOpen, closeAvatarModal, avatarSrc }) {
+
+function calculateAge(birthdate) {
+  const today = new Date();
+  const birthDate = new Date(birthdate);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const monthDiff = today.getMonth() - birthDate.getMonth();
+
+  if (
+    monthDiff < 0 ||
+    (monthDiff === 0 && today.getDate() < birthDate.getDate())
+  ) {
+    age--;
+  }
+
+  return age;
+}
+
+function Profiledisplay({
+  prof,
+  name,
+  email,
+  phone,
+  dob,
+  address,
+  openEditMode,
+  id,
+}) {
+  const [age, setAge] = useState(0);
+
+  useEffect(() => {
+    setAge(calculateAge(dob));
+  }, [dob]);
+
+  return (
+    <div className="div3">
+      <div className="div6">
+        <div className="div4">
+          <Avatar className="prof1" src={prof} alt="" />
+          <h1>{name}</h1>
+        </div>
+        <div className="div5">
+          <h3>Name : {name}</h3>
+          <h3>Email : {email}</h3>
+          <h3>Phone : {phone}</h3>
+          <h3>DOB : {dob}</h3>
+          <h3>AGE : {age}</h3>
+          <h3 className="addh3">Address : {address}</h3>
+        </div>
+      </div>
+
+      <Button onClick={() =>openEditMode(id)} variant="contained">
+        Edit
+      </Button>
+    </div>
+  );
+}
+
+function AvatarModal({
+  isOpen,
+  closeAvatarModal,
+  avatarSrc,
+  isEditMode,
+  initialData,
+  userDocRef,
+  resetEditMode,
+}) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [dob, setDob] = useState("");
   const [address, setAddress] = useState("");
+  const [croppedImageUrl, setCroppedImageUrl] = useState("");
+  console.log("docref",userDocRef );
+  useEffect(() => {
+    if (isEditMode && userDocRef){
+      setName(initialData.name || "");
+      setEmail(initialData.email || "");
+      setPhone(initialData.phone || "");
+      setDob(initialData.dob || "");
+      setAddress(initialData.address || "");
+      setCroppedImageUrl(initialData.Profurl || "");
+      console.log("Document Ref:", userDocRef);
+    }
+  }, [isEditMode, userDocRef]);
+
+  useEffect(() => {
+    if (!isEditMode){
+      setName("");
+    setEmail("");
+    setPhone("");
+    setDob("");
+    setAddress("");
+    setCroppedImageUrl("");
+      console.log("Document Ref:", userDocRef);
+    }
+  }, [isEditMode]);
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [crop, setCrop] = useState({ aspect: 1 / 1 });
-
-  const [croppedImageUrl, setCroppedImageUrl] = useState(null);
 
   useEffect(() => {
     if (selectedFile) {
@@ -48,7 +136,6 @@ function AvatarModal({ isOpen, closeAvatarModal, avatarSrc }) {
         const croppedCanvas = document.createElement("canvas");
         const croppedCtx = croppedCanvas.getContext("2d");
 
-        // Set a fixed aspect ratio for automatic cropping
         const aspectRatio = 1 / 1;
         const maxSize = Math.min(image.width, image.height);
 
@@ -73,17 +160,14 @@ function AvatarModal({ isOpen, closeAvatarModal, avatarSrc }) {
         );
 
         croppedCanvas.toBlob(async (blob) => {
-          // Upload the cropped image to Firebase Storage
           const storageRef = ref(
             storage,
             "profile_images/" + selectedFile.name
           );
           await uploadBytes(storageRef, blob);
 
-          // Get the download URL
           const downloadURL = await getDownloadURL(storageRef);
 
-          // Set the cropped image URL
           setCroppedImageUrl(downloadURL);
         });
       };
@@ -96,7 +180,42 @@ function AvatarModal({ isOpen, closeAvatarModal, avatarSrc }) {
     if (e.target.files.length > 0) {
       const file = e.target.files[0];
       setSelectedFile(file);
-      setCroppedImageUrl(null); // Reset cropped image URL when a new file is selected
+      setCroppedImageUrl(null);
+    }
+  };
+
+  const handleUpdate = async () => {
+    try {
+      console.log("Updating document...");
+      console.log("Name:", name);
+      console.log("Email:", email);
+      console.log("Phone:", phone);
+      console.log("DOB:", dob);
+      console.log("Address:", address);
+      console.log("Cropped Image URL:", );
+      console.log("Document Ref:", userDocRef);
+
+      if (!userDocRef) {
+        console.error("Invalid document reference");
+        return;
+      }
+
+      await updateDoc(userDocRef, {
+        name,
+        email,
+        phone,
+        dob,
+        address,
+        Profurl: croppedImageUrl,
+        lowercaseName: name.toLowerCase(),
+      });
+
+      console.log("Document updated successfully");
+
+
+      closeAvatarModal();
+    } catch (error) {
+      console.error("Error updating document: ", error);
     }
   };
 
@@ -112,11 +231,16 @@ function AvatarModal({ isOpen, closeAvatarModal, avatarSrc }) {
         Profurl: croppedImageUrl || avatarSrc,
       });
       console.log("Document written with ID: ", docRef.id);
+
     } catch (e) {
       console.error("Error adding document: ", e);
     }
-
-    // Close the modal
+setName("");
+setEmail("");
+setPhone("");
+setDob("");
+setAddress("");
+setCroppedImageUrl("");
     closeAvatarModal();
   };
 
@@ -184,8 +308,11 @@ function AvatarModal({ isOpen, closeAvatarModal, avatarSrc }) {
             ></textarea>
           </div>
         </div>
-        <Button variant="contained" onClick={handleModalSubmit}>
-          Submit
+        <Button
+          variant="contained"
+          onClick={isEditMode ? handleUpdate : handleModalSubmit}
+        >
+          {isEditMode ? "Update" : "Submit"}
         </Button>
       </div>
     </div>
@@ -194,8 +321,9 @@ function AvatarModal({ isOpen, closeAvatarModal, avatarSrc }) {
 
 function Home() {
   const navigate = useNavigate();
-
+  const [isEditMode, setIsEditMode] = useState(false);
   const [searchUsername, setSearchUsername] = useState("");
+  const [idToUpdate, setIdToUpdate] = useState(null);
   const [userProfile, setUserProfile] = useState({
     name: "",
     email: "",
@@ -206,37 +334,64 @@ function Home() {
   });
 
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
-
-  const openAvatarModal = () => {
-    setIsAvatarModalOpen(true);
+  const [userDocRef, setUserDocRef] = useState(null);
+  const openEditMode = (docRef) => {
+    setUserDocRef(docRef);
+    setIsEditMode(true);
+    openAvatarModal();
   };
+
+  const openAvatarModal = (id) => {
+    setIdToUpdate(id); // Set the id first
+    setIsAvatarModalOpen(true);
+    setUserFound(null); // Clear the user found state when opening the modal
+  };
+
+  const resetEditMode = () => {
+    setIsEditMode(false);
+  };
+  
 
   const closeAvatarModal = () => {
     setIsAvatarModalOpen(false);
+    setIsEditMode(false);
   };
+
+  useEffect(() => {
+    setUserFound(null);
+  }, [searchUsername]);
+
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       handleSearch();
     }
   };
-  const [userFound, setUserFound] = useState(false);
+  const [userFound, setUserFound] = useState(null);
+  const [document,setDocument]=useState("");
   const handleSearch = async () => {
     try {
       if (!searchUsername.trim()) {
         alert("Please enter a username for search.");
+        setUserFound(null);
         return;
       }
 
-      const lowercaseUsername = searchUsername.toLowerCase();
+    const lowercaseUsername = searchUsername.toLowerCase();
+ 
+     
       console.log("Searching for lowercase username:", lowercaseUsername);
-
+  
       const q = query(
         collection(db, "users"),
         where("lowercaseName", "==", lowercaseUsername)
       );
       const querySnapshot = await getDocs(q);
-
+  
       if (!querySnapshot.empty) {
+        const firstDoc = querySnapshot.docs[0];
+        const userDocRef = firstDoc.ref;
+        setUserDocRef(userDocRef); // Store the document reference
+  
         querySnapshot.forEach((doc) => {
           setUserProfile(doc.data());
         });
@@ -295,29 +450,37 @@ function Home() {
           />
           <SearchIcon onClick={handleSearch} />
         </div>
-        {userFound && (
-          <Profiledisplay
-            prof={userProfile.Profurl}
-            name={userProfile.name}
-            email={userProfile.email}
-            phone={userProfile.phone}
-            dob={userProfile.dob}
-            address={userProfile.address}
-          />
-        )}
-
         {userFound === false && searchUsername.trim() !== "" && (
           <div>
-            <p className="unf">User not found</p>
+            <p className="unf">User not found!</p>
           </div>
         )}
+        {userFound && (
+          <Profiledisplay
+          prof={userProfile.Profurl}
+          name={userProfile.name}
+          email={userProfile.email}
+          phone={userProfile.phone}
+          dob={userProfile.dob}
+          address={userProfile.address}
+          openEditMode={() => openEditMode(userDocRef)} // Assuming docRef is the user document reference
+          id={userProfile.id}
+          
+          />
+          
+        )}
+       
       </div>
 
       <AvatarModal
-        isOpen={isAvatarModalOpen}
-        closeAvatarModal={closeAvatarModal}
-        avatarSrc={prof}
-      />
+  isOpen={isAvatarModalOpen}
+  closeAvatarModal={closeAvatarModal}
+  avatarSrc={prof}
+  isEditMode={isEditMode}
+  initialData={userProfile}
+  userDocRef={userDocRef}
+  resetEditMode={resetEditMode}  // Pass the resetEditMode callback
+/>
     </div>
   );
 }
